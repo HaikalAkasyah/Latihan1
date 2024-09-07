@@ -1,0 +1,45 @@
+<br/>
+                    <label style="display:block; text-align:left;">STATUS</label>
+                    <select type="text" name="txtEditStatus" id="txtEditStatus" class="form-control" value="<?php echo $rowBooking['Status']; ?>">
+                    <option> </option>
+                    <option>Ready</option>
+                    <option>sedang diproses</option>
+                    <option>Dipakai</option>
+                    </select>
+                    <br/>
+                    <input type="submit" name="btnSimpan" id="btnSimpan" value="Simpan" class="btn btn-primary" />
+                    <input type="reset" name="btnBatal" id="btnBatal" value="Batal" class="btn btn-danger" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<label style="display:block; text-align:left;">ID REGISTRASI</label>
+<select type="text" name="txtEditId_Registrasi" id="txtEditId_Registrasi" class="form-control" value="<?php echo $rowBooking['Id_Registrasi']; ?>">
+<option value="pilih">- Pilih -</option>
+  <?php
+    $qryJurusan = mysqli_query($koneksi, "select * from registrasi order by Id_registrasi ASC"); 
+    while($rowJurusan = mysqli_fetch_array($qryJurusan))
+    {
+      if($rowJurusan['Id_registrasi']==$rowBooking['Id_Registrasi'])
+      {
+?>
+    <option value="<?php echo
+    $rowJurusan['Id_registrasi'];?>" selected>
+    <?php echo
+    $rowJurusan['Id_registrasi'];?></option>
+    <?php
+    }
+    else
+    {
+    ?>
+    <option value="<?php echo
+    $rowJurusan['Id_registrasi'];?>"><?php echo $rowJurusan['Id_registrasi'];?></option>
+    <?php
+      }
+    }
+  ?>php

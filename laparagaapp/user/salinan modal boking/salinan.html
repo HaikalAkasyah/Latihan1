@@ -1,0 +1,151 @@
+<!-- Modal Booking -->
+<div id="modalTambahDatabooking" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+           <h4 class="modal-title">Form Input Data booking</h4>
+          </div>
+  <div class="modal-body ">
+        <form name="frmTambahDatabooking" id="frmTambahDatabooking" action="action/prosesbooking.php" method="POST" enctype="multipart/form-data">
+          <label for="txtId_lapangan">ID LAPANGAN</label>
+          <select type="text" name="txtId_lapangan" id="txtId_lapangan" class="form-control">
+              <option value="lapangan1">lapangan1</option>
+                <option value="lapangan2">lapangan2</option>
+             
+              <?php
+              $qryJurusan = mysqli_query($koneksi, "select * from lapangan order by Id_lapangan ASC");
+              while($rowJurusan= mysqli_fetch_array($qryJurusan))
+              {
+                ?>
+                <option value="<?php echo $rowJurusan['Id_lapangan'];?>"><?php echo $rowJurusan['Id_lapangan'];?></option>  
+                <?php    
+              }
+              ?>
+              </select>
+              <br/>
+          <label for="txtTgl_booking">TANGGAL BOOKING</label>
+          <input type="date" name="txtTgl_booking" id="txtTgl_booking" class="form-control" />
+          <br/>
+          <label for="txtjam_main">JAM MAIN</label>
+          <input type="text" name="txtjam_main" id="txtjam_main" class="form-control" />
+          <br/>
+          <label for="durasi">Durasi</label>
+          <input type="number" id="durasi" name="durasi" min="1" class="form-control">
+          <br/>
+          <label for="pembayaran">Pilih Pembayaran:</label>
+              <select id="pembayaran" name="pembayaran" class="form-control">
+                <option value="credit">Kartu Kredit</option>
+                <option value="transfer">Transfer Bank</option>
+                <option value="cash">Pembayaran Tunai</option>
+              </select>
+            </br>
+          <input type="submit" name="btnSimpan" id="btnSimpan" value="Simpan" class="btn btn-primary" />
+          <input type="reset" name="btnBatal" id="btnBatal" value="Batal" class="btn btn-danger" />
+        </form>
+      </div>
+     <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Tutup</button>
+        </div>
+    </div>
+  </div>
+  </div>
+  <!-- Boking lama-->
+  <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Menu Booking</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form id="bookingForm" action="action/prosesbooking.php" method="post">
+              <label for="lapangan">Pilih Lapangan:</label>
+              <select id="lapangan" name="lapangan" class="form-control">
+                <option value="lapangan1">Lapangan 1</option>
+                <option value="lapangan2">Lapangan 2</option>
+              </select>
+  
+              <label for="tanggal">Tanggal:</label>
+              <input type="date" id="tanggal" name="tanggal" class="form-control">
+  
+              <label for="jam">Jam:</label>
+              <input type="time" id="jam" name="jam" class="form-control">
+  
+              <label for="pembayaran">Pilih Pembayaran:</label>
+              <select id="pembayaran" name="pembayaran" class="form-control">
+                <option value="credit">Kartu Kredit</option>
+                <option value="transfer">Transfer Bank</option>
+                <option value="cash">Pembayaran Tunai</option>
+              </select>
+  
+              <label for="durasi">Durasi (jam):</label>
+              <input type="number" id="durasi" name="durasi" min="1" max="5" class="form-control">
+              <br>
+              <button type="button" class="btn btn-primary" id="bookingButton">Booking</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Notification Modal -->
+  <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="notificationBody">
+          <!-- Notification message goes here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  $(function()
+  {
+    $('#frmTambahDatapemilik').on("submit", function(event)
+    {
+      event.preventDefault();
+      if($('#txtId_lapangan').val() =="")
+      {
+        alert("Id Pemilik Harus Di isi");
+      }
+      else if ($('#txtTgl_booking').val() =='')
+      {
+        alert("Nama Pemilik Harus Di isi");
+      }
+      else if ($('#txtjam_main').val() =='')
+      {
+        alert("Alamat pemilik harus di isi");
+      }
+      else if ($('#durasi').val() =='')
+      {
+        alert("Jenis Kelamin Harus diisi");
+      }
+      else if ($('#pembayaran').val() =='')
+      {
+        alert("Nomor hp harus di isi");
+      }
+      else
+      {
+        $.ajax({
+          url:"action/prosesbooking.php",
+          method:"POST",
+          data : $('#frmTambahDatapemilik').serialize(),
+          beforeSend:function(){
+            $('#btnSimpan').val("Sedang menyimpan..");
+          },
+          success : function(data){
+            $('#frmTambahDatapemilik') [0].reset();
+            $('#modalTambahDatapemilik').modal('hide');
+            $('#tblDatapemilik').html(data);
+          }
+        });
+      }
+    });
+  });
+  </script>

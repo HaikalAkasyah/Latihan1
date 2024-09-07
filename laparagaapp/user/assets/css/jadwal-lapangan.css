@@ -1,0 +1,41 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(../img/Background-lapangan.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+.container {
+    max-width: 1000px ;
+    margin: auto;
+    overflow: auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 90px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    text-align: center !important;
+}
+
+th, td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #111;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
